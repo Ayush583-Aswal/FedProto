@@ -68,5 +68,31 @@ def args_parser():
     parser.add_argument('--stdev', type=int, default=2, help="stdev of ways")
     parser.add_argument('--ld', type=float, default=1, help="weight of proto loss")
     parser.add_argument('--ft_round', type=int, default=10, help="round of fine tuning")
+
+    # DCAA Framework Arguments
+    parser.add_argument('--use_dcaa', type=int, default=1, 
+                        help='Use DCAA framework (1) or standard FedProto (0)')
+    parser.add_argument('--alpha', type=float, default=0.6,
+                        help='Weight for VAG in contribution score')
+    parser.add_argument('--beta', type=float, default=0.4,
+                        help='Weight for PDS in contribution score')
+    parser.add_argument('--tau_low', type=float, default=0.1,
+                        help='Low contribution threshold')
+    parser.add_argument('--tau_high', type=float, default=0.8,
+                        help='High anomaly threshold')
+    parser.add_argument('--gamma', type=float, default=0.1,
+                        help='Throttling factor for low contributors')
+    parser.add_argument('--consecutive_rounds', type=int, default=3,
+                        help='Consecutive low contribution rounds before throttling')
+    
+    # Free-rider simulation
+    parser.add_argument('--num_attackers', type=int, default=0,
+                        help='Number of free-rider attackers')
+    parser.add_argument('--attack_type', type=str, default='plain',
+                        choices=['plain', 'perturbation', 'extrapolation'],
+                        help='Type of free-rider attack')
+    parser.add_argument('--attack_sigma', type=float, default=0.1,
+                        help='Noise sigma for perturbation attack')
+    
     args = parser.parse_args()
     return args
